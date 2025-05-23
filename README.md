@@ -2,9 +2,9 @@
 
 ## 👨‍💻 Integrantes
 
-- Paulo Cesar de Govea Junior - rm566034
-- Nome 2 
-- Nome 3 
+- Paulo Cesar de Govea Junior - (RM:566034)
+- Guilherme Vilela Perez - (RM:564422)
+- Gustavo Panham Dourado - (RM:563904)
 
 ---
 
