@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Produtos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="imagens/Code-vera.png" alt="Logo da loja" class="logo">
+    <h1>Catálogo de Produtos</h1>
+  </header>
+<body>
+  <h1>Catálogo de Produtos</h1>
+
+  <form id="form-filtro">
+    <select id="categoria">
+      <option value="">Todas as Categorias</option>
+      <option value="Eletrônicos">Eletrônicos</option>
+      <option value="Roupas">Roupas</option>
+      <option value="Livros">Livros</option>
+    </select>
+    <label>
+      <input type="checkbox" id="disponiveis"> Somente disponíveis
+    </label>
+    <button type="submit">Filtrar</button>
+    <button type="button" onclick="listarProdutos(produtos)">Listar Todos</button>
+  </form>
+
+  <div id="produtos"></div>
+
+  <script>
+    const produtos = [
+       
+      { nome: "Smartphone", preco: 2500, categoria: "Eletrônicos", disponibilidade: true, imagem: "imagens/1a28a0eb-5e30-4ee0-9b83-c0b46d7c56eb.png" },
+      { nome: "Notebook", preco: 4500, categoria: "Eletrônicos", disponibilidade: false, imagem: "imagens/aa19c09a-999d-4666-926f-296307d299c1.png" },
+      { nome: "Camiseta", preco: 80, categoria: "Roupas", disponibilidade: true, imagem: "imagens/a4e8ff6b-779f-4c14-9254-b470e29dfd11.png" },
+      { nome: "Calça Jeans", preco: 150, categoria: "Roupas", disponibilidade: true, imagem: "imagens/d29ad4ae-a8bf-4ea8-9b24-1b579ffac5c8.png" },
+      { nome: "Livro JavaScript", preco: 60, categoria: "Livros", disponibilidade: true, imagem: "imagens/848d9632-be9a-4ab2-8ea5-39e4ba7db111.png" },
+      { nome: "Livro HTML", preco: 50, categoria: "Livros", disponibilidade: false, imagem: "imagens/c501dcc7-87d2-45ec-b72f-8892eb6f4d2c.png" },
+      { nome: "Fone de Ouvido", preco: 120, categoria: "Eletrônicos", disponibilidade: true, imagem: "imagens/a89945ce-dc7b-4832-9cc2-085182f6774a.png" },
+      { nome: "Jaqueta", preco: 200, categoria: "Roupas", disponibilidade: false, imagem: "imagens/9f0f08c4-a305-418c-af21-245875af2be2.png" },
+      { nome: "Livro CSS", preco: 45, categoria: "Livros", disponibilidade: true, imagem: "imagens/27207518-0507-4f67-a455-ce72c43bd02e.png" },
+      { nome: "Tablet", preco: 1800, categoria: "Eletrônicos", disponibilidade: true, imagem: "imagens/2323e7ec-4876-4146-854f-f73c288b1126.png" }
+    ];
+
+    const container = document.getElementById("produtos");
+    const form = document.getElementById("form-filtro");
+
+    function criarElementoProduto(produto) {
+      const div = document.createElement("div");
+      div.className = "produto";
+      div.innerHTML = `
+        <img src="${produto.imagem}" alt="${produto.nome}" />
+        <h3>${produto.nome}</h3>
+        <p>Preço: R$ ${produto.preco}</p>
+        <p>Categoria: ${produto.categoria}</p>
+        <p>${produto.disponibilidade ? "Disponível" : "Indisponível"}</p>
+      `;
+      return div;
+    }
+
+    function listarProdutos(lista) {
+      container.innerHTML = "";
+      const agrupados = {};
+
+      lista.sort((a, b) => a.preco - b.preco);
+      lista.forEach(p => {
+        if (!agrupados[p.categoria]) agrupados[p.categoria] = [];
+        agrupados[p.categoria].push(p);
+      });
+
+      for (const categoria in agrupados) {
+        const section = document.createElement("div");
+        section.className = "categoria-section";
+
+        const titulo = document.createElement("h2");
+        titulo.className = "categoria-title";
+        titulo.textContent = categoria;
+
+        const grupo = document.createElement("div");
+        grupo.className = "produtos-container";
+
+        agrupados[categoria].forEach(produto => {
+          const el = criarElementoProduto(produto);
+          grupo.appendChild(el);
+        });
+
+        section.appendChild(titulo);
+        section.appendChild(grupo);
+        container.appendChild(section);
+      }
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const categoria = document.getElementById("categoria").value;
+      const somenteDisponiveis = document.getElementById("disponiveis").checked;
+
+      const filtrados = produtos.filter(p => {
+        const categoriaOK = !categoria || p.categoria === categoria;
+        const disponibilidadeOK = !somenteDisponiveis || p.disponibilidade;
+        return categoriaOK && disponibilidadeOK;
+      });
+
+      listarProdutos(filtrados);
+    });
+
+    listarProdutos(produtos);
+  </script>
+</body>
+</html>
