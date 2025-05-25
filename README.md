@@ -67,21 +67,6 @@ Fluxo de dados entre eventos, filtros e DOM
 
 ---
 
-💻 Como executar o projeto
-Clone este repositório:
-
-bash
-Copiar
-Editar
-git clone https://github.com/SeuUsuario/cp3-catalogo
-Acesse a pasta do projeto:
-
-bash
-Copiar
-Editar
-cd cp3-catalogo
-Abra o arquivo index.html no navegador ou utilize a extensão Live Server no VSCode.
-
 🛠️ Tecnologias Utilizadas
 HTML
 
